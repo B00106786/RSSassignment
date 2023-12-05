@@ -11,8 +11,20 @@
         android:layout_width="245dp"
         android:layout_height="71dp"
         android:layout_marginBottom="364dp"
-        android:onClick="newsScreen"
+        android:onClick="Login"
         android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="245dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="275dp"
+        android:onClick="Register"
+        android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

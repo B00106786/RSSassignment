@@ -6,7 +6,15 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 public class Login extends AppCompatActivity {
@@ -15,10 +23,12 @@ public class Login extends AppCompatActivity {
     EditText textInputEmail;
     EditText textInputPassword;
 
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
 
         send_button = findViewById(R.id.send_button_id);
 
@@ -29,8 +39,7 @@ public class Login extends AppCompatActivity {
             if (!validateEmail() | !validatePassword()) {
                 return;
             }else {
-                Intent i = new Intent(getApplicationContext(), Subscribe.class);
-                startActivity(i);
+                loginUserAccount();
             }
         });
     }
@@ -60,5 +69,44 @@ public class Login extends AppCompatActivity {
             textInputPassword.setError(null);
             return true;
         }
+    }
+
+    private void loginUserAccount()
+    {
+        // Take the value of two edit texts in Strings
+        String email, password;
+        email = textInputEmail.getText().toString();
+        password = textInputPassword.getText().toString();
+
+        // signin existing user
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                        new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(
+                                    @NonNull Task<AuthResult> task)
+                            {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(),
+                                                    "Login successful!!",
+                                                    Toast.LENGTH_LONG)
+                                            .show();
+
+                                    // if sign-in is successful
+                                    Intent intent
+                                            = new Intent(Login.this,
+                                            Subscribe.class);
+                                    startActivity(intent);
+                                }
+
+                                else {
+                                    // sign-in failed
+                                    Toast.makeText(getApplicationContext(),
+                                                    "Login failed!!",
+                                                    Toast.LENGTH_LONG)
+                                            .show();
+                                }
+                            }
+                        });
     }
 }

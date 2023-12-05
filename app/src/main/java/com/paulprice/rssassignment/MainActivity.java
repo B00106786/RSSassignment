@@ -13,8 +13,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void newsScreen(View view) {
+    public void Login(View view) {
         Intent i = new Intent(getApplicationContext(), Login.class);
+        startActivity(i);
+    }
+
+    public void Register(View view) {
+        Intent i = new Intent(getApplicationContext(), Register.class);
         startActivity(i);
     }
 }
